@@ -1,0 +1,2538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RefICO — Referencias Bibliográficas · FES Aragón UNAM</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   TOKENS & RESET
+═══════════════════════════════════════════════════════════ */
+:root {
+  --rose-50:  #fff1f3;
+  --rose-100: #ffe4e9;
+  --rose-200: #fecdd5;
+  --rose-300: #fda4b4;
+  --rose-400: #fb7191;
+  --rose-500: #f43f6b;
+  --rose-600: #e11d4a;
+
+  --navy-800: #1e2a45;
+  --navy-700: #243152;
+  --navy-600: #2e3f6b;
+  --navy-500: #3b52a3;
+
+  --warm-50:  #fdf8f5;
+  --warm-100: #f9f0e9;
+  --warm-200: #f0dccb;
+
+  --sand:     #f5ede3;
+  --cream:    #fffaf7;
+
+  --text-dark: #1e2a45;
+  --text-mid:  #4a546a;
+  --text-soft: #7e8ba3;
+
+  --white: #ffffff;
+  --shadow-sm: 0 2px 8px rgba(30,42,69,.08);
+  --shadow-md: 0 6px 24px rgba(30,42,69,.12);
+  --shadow-lg: 0 16px 48px rgba(30,42,69,.16);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+
+  --transition: .22s cubic-bezier(.4,0,.2,1);
+
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--text-dark);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--warm-100); }
+::-webkit-scrollbar-thumb { background: var(--rose-300); border-radius: 999px; }
+
+/* ═══════════════════════════════════════════════════════════
+   LAYOUT SHELL
+═══════════════════════════════════════════════════════════ */
+.app-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TOP BAR
+═══════════════════════════════════════════════════════════ */
+.topbar {
+  grid-column: 1 / -1;
+  background: var(--navy-800);
+  padding: 0 2rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 16px rgba(0,0,0,.25);
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  text-decoration: none;
+}
+
+.topbar-logo {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--rose-400), var(--rose-600));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: 0 0 0 3px rgba(251,113,145,.25);
+}
+
+.topbar-title {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -.01em;
+}
+
+.topbar-title span {
+  color: var(--rose-300);
+}
+
+.topbar-sub {
+  font-size: .68rem;
+  color: var(--text-soft);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topbar-badge {
+  font-size: .72rem;
+  background: rgba(253,164,180,.15);
+  color: var(--rose-300);
+  border: 1px solid rgba(253,164,180,.3);
+  padding: .25rem .75rem;
+  border-radius: 999px;
+  letter-spacing: .04em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SIDEBAR
+═══════════════════════════════════════════════════════════ */
+.sidebar {
+  background: var(--white);
+  border-right: 1.5px solid var(--warm-200);
+  padding: 1.75rem 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  position: sticky;
+  top: 60px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+}
+
+.sidebar-section {
+  padding: 0 1.25rem;
+  margin-bottom: .25rem;
+}
+
+.sidebar-label {
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  padding: .75rem .5rem .4rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  padding: .65rem .75rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: .88rem;
+  font-weight: 500;
+  color: var(--text-mid);
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  position: relative;
+}
+
+.nav-item:hover {
+  background: var(--rose-50);
+  color: var(--rose-600);
+}
+
+.nav-item.active {
+  background: linear-gradient(90deg, var(--rose-50), var(--rose-100));
+  color: var(--rose-600);
+  font-weight: 600;
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%; transform: translateY(-50%);
+  width: 3px; height: 60%;
+  background: var(--rose-400);
+  border-radius: 0 3px 3px 0;
+}
+
+.nav-item-icon { font-size: 1rem; width: 20px; text-align: center; }
+
+.nav-count {
+  margin-left: auto;
+  font-size: .72rem;
+  background: var(--rose-100);
+  color: var(--rose-600);
+  padding: .1rem .5rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: var(--warm-200);
+  margin: .75rem 1.25rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN CONTENT
+═══════════════════════════════════════════════════════════ */
+.main {
+  padding: 2rem 2.5rem 3rem;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+/* ── Page header ── */
+.page-header {
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.page-header h1 {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--navy-800);
+  line-height: 1.15;
+}
+
+.page-header h1 em {
+  color: var(--rose-500);
+  font-style: normal;
+}
+
+.page-subtitle {
+  font-size: .82rem;
+  color: var(--text-soft);
+  margin-top: .3rem;
+}
+
+/* ── Stat cards row ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.4rem;
+  border: 1.5px solid var(--warm-200);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  cursor: default;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--rose-200);
+}
+
+.stat-card-icon {
+  font-size: 1.4rem;
+  margin-bottom: .5rem;
+}
+
+.stat-card-value {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--navy-800);
+  line-height: 1;
+}
+
+.stat-card-label {
+  font-size: .75rem;
+  color: var(--text-soft);
+  font-weight: 500;
+  margin-top: .3rem;
+  letter-spacing: .02em;
+}
+
+/* ── Search bar ── */
+.search-wrap {
+  display: flex;
+  gap: .75rem;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  flex: 1;
+  min-width: 220px;
+  position: relative;
+}
+
+.search-box input {
+  width: 100%;
+  padding: .7rem 1rem .7rem 2.7rem;
+  border: 1.5px solid var(--warm-200);
+  border-radius: var(--radius-md);
+  font-family: var(--sans);
+  font-size: .9rem;
+  color: var(--text-dark);
+  background: var(--white);
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--rose-300);
+  box-shadow: 0 0 0 3px rgba(244,63,107,.1);
+}
+
+.search-box input::placeholder { color: var(--text-soft); }
+
+.search-icon {
+  position: absolute;
+  left: .85rem;
+  top: 50%; transform: translateY(-50%);
+  color: var(--text-soft);
+  font-size: .9rem;
+  pointer-events: none;
+}
+
+.filter-select {
+  padding: .7rem 1rem;
+  border: 1.5px solid var(--warm-200);
+  border-radius: var(--radius-md);
+  font-family: var(--sans);
+  font-size: .88rem;
+  color: var(--text-dark);
+  background: var(--white);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--rose-300);
+}
+
+/* ── Primary button ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .7rem 1.35rem;
+  background: linear-gradient(135deg, var(--rose-400), var(--rose-600));
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--sans);
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 14px rgba(244,63,107,.35);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(244,63,107,.45);
+}
+
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .65rem 1.2rem;
+  background: var(--white);
+  color: var(--text-mid);
+  border: 1.5px solid var(--warm-200);
+  border-radius: var(--radius-md);
+  font-family: var(--sans);
+  font-size: .87rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-secondary:hover {
+  border-color: var(--rose-200);
+  color: var(--rose-600);
+  background: var(--rose-50);
+}
+
+.btn-danger {
+  background: none;
+  border: 1.5px solid #fecdd5;
+  color: var(--rose-600);
+  border-radius: var(--radius-sm);
+  padding: .4rem .7rem;
+  font-size: .82rem;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: var(--transition);
+}
+
+.btn-danger:hover {
+  background: var(--rose-50);
+  border-color: var(--rose-300);
+}
+
+/* ── Table ── */
+.table-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--warm-200);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .86rem;
+}
+
+thead tr {
+  background: linear-gradient(90deg, var(--warm-100), var(--warm-50));
+}
+
+thead th {
+  padding: .9rem 1.1rem;
+  text-align: left;
+  font-size: .72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-soft);
+  white-space: nowrap;
+  border-bottom: 1.5px solid var(--warm-200);
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--warm-100);
+  transition: var(--transition);
+}
+
+tbody tr:last-child { border-bottom: none; }
+
+tbody tr:hover {
+  background: var(--rose-50);
+}
+
+tbody td {
+  padding: .85rem 1.1rem;
+  color: var(--text-dark);
+  vertical-align: top;
+}
+
+.td-titulo {
+  font-weight: 600;
+  color: var(--navy-800);
+  max-width: 280px;
+}
+
+.td-titulo small {
+  display: block;
+  font-size: .78rem;
+  font-weight: 400;
+  color: var(--text-soft);
+  margin-top: .15rem;
+}
+
+.td-actions {
+  display: flex;
+  gap: .4rem;
+  white-space: nowrap;
+}
+
+.btn-icon {
+  background: none;
+  border: 1.5px solid var(--warm-200);
+  border-radius: var(--radius-sm);
+  padding: .38rem .55rem;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: .85rem;
+  line-height: 1;
+}
+
+.btn-icon:hover {
+  background: var(--rose-50);
+  border-color: var(--rose-200);
+}
+
+.btn-icon.cite { color: var(--navy-500); }
+.btn-icon.edit { color: var(--text-mid); }
+.btn-icon.del  { color: var(--rose-500); }
+
+/* ── Pill badges ── */
+.pill {
+  display: inline-block;
+  padding: .2rem .65rem;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+
+.pill-basica {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.pill-complementaria {
+  background: var(--warm-200);
+  color: var(--text-mid);
+}
+
+.pill-libro       { background: #dcfce7; color: #166534; }
+.pill-articulo    { background: #fef9c3; color: #854d0e; }
+.pill-web         { background: #ede9fe; color: #5b21b6; }
+.pill-tesis       { background: #fce7f3; color: #9d174d; }
+.pill-otro        { background: var(--warm-100); color: var(--text-mid); }
+.pill-capitulo    { background: #ccfbf1; color: #065f46; }
+
+/* ═══════════════════════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30,42,69,.45);
+  backdrop-filter: blur(4px);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: translateY(24px) scale(.97);
+  transition: transform var(--transition);
+}
+
+.modal-overlay.open .modal {
+  transform: translateY(0) scale(1);
+}
+
+.modal-header {
+  padding: 1.6rem 2rem 1.2rem;
+  border-bottom: 1.5px solid var(--warm-200);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  background: var(--white);
+  z-index: 1;
+}
+
+.modal-title {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  color: var(--navy-800);
+  line-height: 1.2;
+}
+
+.modal-close {
+  background: var(--warm-100);
+  border: none;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--text-mid);
+  transition: var(--transition);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.modal-close:hover { background: var(--rose-100); color: var(--rose-600); }
+
+.modal-body {
+  padding: 1.5rem 2rem 2rem;
+}
+
+/* ── Form ── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.25rem;
+}
+
+.form-group { display: flex; flex-direction: column; gap: .4rem; }
+.form-group.full { grid-column: 1 / -1; }
+
+.form-label {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  letter-spacing: .02em;
+}
+
+.form-label .req { color: var(--rose-500); margin-left: 2px; }
+
+.form-input, .form-select, .form-textarea {
+  padding: .65rem .9rem;
+  border: 1.5px solid var(--warm-200);
+  border-radius: var(--radius-sm);
+  font-family: var(--sans);
+  font-size: .88rem;
+  color: var(--text-dark);
+  background: var(--white);
+  transition: var(--transition);
+  width: 100%;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none;
+  border-color: var(--rose-300);
+  box-shadow: 0 0 0 3px rgba(244,63,107,.1);
+}
+
+.form-textarea { resize: vertical; min-height: 80px; }
+
+.form-section-title {
+  grid-column: 1 / -1;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--rose-500);
+  margin-top: .5rem;
+  padding-bottom: .4rem;
+  border-bottom: 1px solid var(--rose-100);
+}
+
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: .75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1.5px solid var(--warm-200);
+}
+
+/* ── Authors dynamic list ── */
+.autores-list {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  margin-top: .25rem;
+}
+
+.autor-row {
+  display: grid;
+  grid-template-columns: 1fr .4fr .5fr auto;
+  gap: .5rem;
+  align-items: center;
+}
+
+.autor-row input {
+  padding: .5rem .7rem;
+  border: 1.5px solid var(--warm-200);
+  border-radius: var(--radius-sm);
+  font-size: .85rem;
+  font-family: var(--sans);
+  width: 100%;
+  transition: var(--transition);
+}
+
+.autor-row input:focus {
+  outline: none;
+  border-color: var(--rose-300);
+  box-shadow: 0 0 0 3px rgba(244,63,107,.08);
+}
+
+.autor-del {
+  background: none;
+  border: 1.5px solid var(--rose-200);
+  color: var(--rose-500);
+  border-radius: var(--radius-sm);
+  width: 30px; height: 30px;
+  cursor: pointer;
+  font-size: .85rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition);
+}
+
+.autor-del:hover { background: var(--rose-50); }
+
+.btn-add-autor {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .82rem;
+  color: var(--rose-500);
+  background: none;
+  border: 1.5px dashed var(--rose-300);
+  border-radius: var(--radius-sm);
+  padding: .45rem .9rem;
+  cursor: pointer;
+  margin-top: .35rem;
+  transition: var(--transition);
+  font-family: var(--sans);
+}
+
+.btn-add-autor:hover { background: var(--rose-50); }
+
+/* ═══════════════════════════════════════════════════════════
+   CITE MODAL (special)
+═══════════════════════════════════════════════════════════ */
+.cite-tabs {
+  display: flex;
+  gap: .3rem;
+  border-bottom: 1.5px solid var(--warm-200);
+  margin-bottom: 1.25rem;
+}
+
+.cite-tab {
+  padding: .5rem 1rem;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 2.5px solid transparent;
+  margin-bottom: -1.5px;
+  transition: var(--transition);
+  font-family: var(--sans);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.cite-tab.active {
+  color: var(--rose-600);
+  border-bottom-color: var(--rose-500);
+  background: var(--rose-50);
+}
+
+.cite-tab:hover { color: var(--rose-500); }
+
+.cite-block {
+  background: var(--warm-100);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.25rem;
+  font-size: .87rem;
+  line-height: 1.7;
+  color: var(--navy-800);
+  font-family: 'Georgia', serif;
+  position: relative;
+  border: 1.5px solid var(--warm-200);
+  min-height: 80px;
+}
+
+.cite-copy {
+  position: absolute;
+  top: .6rem; right: .6rem;
+  background: var(--white);
+  border: 1.5px solid var(--warm-200);
+  border-radius: var(--radius-sm);
+  padding: .3rem .55rem;
+  font-size: .75rem;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--sans);
+  color: var(--text-mid);
+}
+
+.cite-copy:hover { border-color: var(--rose-300); color: var(--rose-600); }
+.cite-copy.copied { color: #166534; border-color: #86efac; }
+
+.cite-placeholder {
+  color: var(--text-soft);
+  font-style: italic;
+  font-family: var(--sans);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LOADING / EMPTY STATES
+═══════════════════════════════════════════════════════════ */
+.loading-row td {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-soft);
+  font-size: .9rem;
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px; height: 20px;
+  border: 2.5px solid var(--rose-200);
+  border-top-color: var(--rose-500);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  vertical-align: middle;
+  margin-right: .5rem;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-soft);
+}
+
+.empty-state-icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: .5; }
+.empty-state p { font-size: .9rem; }
+
+/* ═══════════════════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════════════════ */
+.toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.toast {
+  background: var(--navy-800);
+  color: var(--white);
+  padding: .75rem 1.2rem;
+  border-radius: var(--radius-md);
+  font-size: .86rem;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  animation: slideUp .3s ease;
+  max-width: 320px;
+}
+
+.toast.success { background: #064e3b; }
+.toast.error   { background: #7f1d1d; }
+
+@keyframes slideUp {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PAGINATION
+═══════════════════════════════════════════════════════════ */
+.table-footer {
+  padding: .9rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1.5px solid var(--warm-200);
+  font-size: .82rem;
+  color: var(--text-soft);
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.pagination {
+  display: flex;
+  gap: .3rem;
+}
+
+.page-btn {
+  padding: .35rem .6rem;
+  border: 1.5px solid var(--warm-200);
+  border-radius: var(--radius-sm);
+  background: none;
+  font-size: .82rem;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--sans);
+  color: var(--text-mid);
+}
+
+.page-btn:hover, .page-btn.active {
+  background: var(--rose-500);
+  border-color: var(--rose-500);
+  color: var(--white);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION PANELS (show/hide)
+═══════════════════════════════════════════════════════════ */
+.section-panel { display: none; }
+.section-panel.active { display: block; }
+
+/* ═══════════════════════════════════════════════════════════
+   AUTHORS SECTION CARD
+═══════════════════════════════════════════════════════════ */
+.authors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.author-card {
+  background: var(--white);
+  border: 1.5px solid var(--warm-200);
+  border-radius: var(--radius-md);
+  padding: 1.2rem 1.4rem;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.author-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--rose-200);
+}
+
+.author-initial-circle {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose-200), var(--rose-400));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  color: var(--white);
+  font-weight: 700;
+  margin-bottom: .75rem;
+}
+
+.author-name {
+  font-weight: 600;
+  color: var(--navy-800);
+  font-size: .92rem;
+}
+
+.author-initial { color: var(--text-soft); font-size: .82rem; margin-top: .1rem; }
+.author-count {
+  margin-top: .6rem;
+  font-size: .76rem;
+  color: var(--rose-500);
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SEMESTRES SECTION
+═══════════════════════════════════════════════════════════ */
+.sem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.sem-card {
+  background: var(--white);
+  border: 1.5px solid var(--warm-200);
+  border-radius: var(--radius-md);
+  padding: 1.3rem 1.5rem;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.sem-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--rose-200);
+}
+
+.sem-num {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--rose-300);
+  line-height: 1;
+  margin-bottom: .3rem;
+}
+
+.sem-name {
+  font-weight: 600;
+  color: var(--navy-800);
+  font-size: .95rem;
+}
+
+.sem-count {
+  font-size: .78rem;
+  color: var(--text-soft);
+  margin-top: .5rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: none;
+    position: fixed;
+    left: 0; top: 60px;
+    width: 80%;
+    max-width: 280px;
+    z-index: 200;
+    height: calc(100vh - 60px);
+    border-right: 2px solid var(--warm-200);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .sidebar.open { display: flex; }
+
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,.1);
+    border: none;
+    color: var(--white);
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+
+  .main { padding: 1.25rem 1rem 2rem; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-group.full { grid-column: 1; }
+  .autor-row { grid-template-columns: 1fr 1fr; }
+  .autor-row .autor-del { grid-column: 2; justify-self: end; }
+}
+
+@media (min-width: 901px) {
+  .mobile-menu-btn { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     APP SHELL
+═══════════════════════════════════════════════ -->
+<div class="app-shell">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <a href="#" class="topbar-brand" onclick="navigate('inicio')">
+      <div class="topbar-logo">📚</div>
+      <div>
+        <div class="topbar-title">Ref<span>ICO</span></div>
+        <div class="topbar-sub">FES Aragón · UNAM</div>
+      </div>
+    </a>
+    <div class="topbar-right">
+      <span class="topbar-badge">Ing. en Computación</span>
+      <button class="mobile-menu-btn" onclick="toggleSidebar()" title="Menú">☰</button>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">General</div>
+      <button class="nav-item active" id="nav-inicio" onclick="navigate('inicio')">
+        <span class="nav-item-icon">🏠</span> Inicio
+      </button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Catálogos</div>
+      <button class="nav-item" id="nav-bibliografias" onclick="navigate('bibliografias')">
+        <span class="nav-item-icon">📖</span> Bibliografías
+        <span class="nav-count" id="count-bibs">—</span>
+      </button>
+      <button class="nav-item" id="nav-autores" onclick="navigate('autores')">
+        <span class="nav-item-icon">✍️</span> Autores
+        <span class="nav-count" id="count-autores">—</span>
+      </button>
+      <button class="nav-item" id="nav-materias" onclick="navigate('materias')">
+        <span class="nav-item-icon">🎓</span> Materias
+        <span class="nav-count" id="count-materias">—</span>
+      </button>
+      <button class="nav-item" id="nav-semestres" onclick="navigate('semestres')">
+        <span class="nav-item-icon">📅</span> Semestres
+      </button>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Búsqueda</div>
+      <button class="nav-item" id="nav-buscar" onclick="navigate('buscar')">
+        <span class="nav-item-icon">🔍</span> Búsqueda avanzada
+      </button>
+      <button class="nav-item" id="nav-citas" onclick="navigate('citas')">
+        <span class="nav-item-icon">📝</span> Generador de citas
+      </button>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Por grupo</div>
+      <button class="nav-item" onclick="filterGroup('2808')">
+        <span class="nav-item-icon">1️⃣</span> Grupo 2808
+        <small style="color:var(--text-soft);font-size:.72em;display:block;margin-left:28px;margin-top:-2px;">Sems. 1° – 3°</small>
+      </button>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Especiales</div>
+      <button class="nav-item" onclick="filterOptativas()">
+        <span class="nav-item-icon">✦</span> Optativas
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main" id="main">
+
+    <!-- ── INICIO ── -->
+    <div class="section-panel active" id="panel-inicio">
+      <div class="page-header">
+        <div>
+          <h1>Bienvenida a <em>RefICO</em> 🌸</h1>
+          <p class="page-subtitle">Sistema de referencias bibliográficas · Ingeniería en Computación · FES Aragón UNAM</p>
+        </div>
+        <button class="btn-primary" onclick="navigate('bibliografias'); openBibModal()">+ Nueva referencia</button>
+      </div>
+
+      <div class="stats-row" id="stats-row">
+        <div class="stat-card">
+          <div class="stat-card-icon">📚</div>
+          <div class="stat-card-value" id="stat-bibs">—</div>
+          <div class="stat-card-label">Bibliografías</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">✍️</div>
+          <div class="stat-card-value" id="stat-autores">—</div>
+          <div class="stat-card-label">Autores</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">🎓</div>
+          <div class="stat-card-value" id="stat-materias">—</div>
+          <div class="stat-card-label">Materias</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">📅</div>
+          <div class="stat-card-value">10</div>
+          <div class="stat-card-label">Semestres</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:.5rem;" class="inicio-grid">
+        <!-- Quick access -->
+        <div class="table-card" style="padding:1.5rem;">
+          <h3 style="font-family:var(--serif);font-size:1.1rem;color:var(--navy-800);margin-bottom:1rem;">Accesos rápidos ✨</h3>
+          <div style="display:flex;flex-direction:column;gap:.5rem;">
+            <button class="btn-secondary" style="justify-content:flex-start;" onclick="navigate('bibliografias')">📖 Ver todas las bibliografías</button>
+            <button class="btn-secondary" style="justify-content:flex-start;" onclick="navigate('citas')">📝 Generar cita APA / IEEE</button>
+            <button class="btn-secondary" style="justify-content:flex-start;" onclick="navigate('autores')">✍️ Buscar por autor</button>
+            <button class="btn-secondary" style="justify-content:flex-start;" onclick="navigate('buscar')">🔍 Búsqueda avanzada</button>
+          </div>
+        </div>
+
+        <div class="table-card" style="padding:1.5rem;">
+          <h3 style="font-family:var(--serif);font-size:1.1rem;color:var(--navy-800);margin-bottom:1rem;">Formatos soportados 🏷️</h3>
+          <div style="display:flex;flex-direction:column;gap:.6rem;font-size:.87rem;color:var(--text-mid);">
+            <div>🟣 <strong>APA 7</strong> — American Psychological Association</div>
+            <div>🟪 <strong>IEEE</strong> — Institute of Electrical and Electronics Engineers</div>
+            <div>🟫 <strong>MLA</strong> — Modern Language Association</div>
+            <div>🟦 <strong>BibTeX</strong> — Para documentos LaTeX</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── BIBLIOGRAFÍAS ── -->
+    <div class="section-panel" id="panel-bibliografias">
+      <div class="page-header">
+        <div>
+          <h1><em>Bibliografías</em></h1>
+          <p class="page-subtitle">Gestiona las referencias básicas y complementarias</p>
+        </div>
+        <button class="btn-primary" onclick="openBibModal()">+ Nueva referencia</button>
+      </div>
+
+      <div class="search-wrap">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="bib-search" placeholder="Buscar por título, autor, editorial…" oninput="debounceSearch()" />
+        </div>
+        <select class="filter-select" id="bib-filter-tipo" onchange="loadBibs()">
+          <option value="">Todos los tipos</option>
+          <option value="basica">Básica</option>
+          <option value="complementaria">Complementaria</option>
+        </select>
+        <select class="filter-select" id="bib-filter-materia" onchange="loadBibs()">
+          <option value="">Todas las materias</option>
+        </select>
+      </div>
+
+      <div class="table-card">
+        <div class="table-wrap">
+          <table id="bibs-table">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Autor(es)</th>
+                <th>Año</th>
+                <th>Tipo</th>
+                <th>Recurso</th>
+                <th>Materia</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="bibs-tbody">
+              <tr class="loading-row"><td colspan="7"><span class="spinner"></span> Cargando…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <span id="bibs-count">— registros</span>
+          <div class="pagination" id="bibs-pagination"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── AUTORES ── -->
+    <div class="section-panel" id="panel-autores">
+      <div class="page-header">
+        <div>
+          <h1><em>Autores</em></h1>
+          <p class="page-subtitle">Busca a un autor y consulta todas sus obras</p>
+        </div>
+      </div>
+
+      <div class="search-wrap" id="autor-search-wrap">
+        <div class="search-box" style="max-width:400px;">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="autor-search" placeholder="Buscar por apellido…" oninput="debounceAutorSearch()" />
+        </div>
+      </div>
+
+      <div class="authors-grid" id="authors-grid">
+        <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-soft);">
+          <span class="spinner"></span> Cargando autores…
+        </div>
+      </div>
+    </div>
+
+    <!-- ── MATERIAS ── -->
+    <div class="section-panel" id="panel-materias">
+      <div class="page-header">
+        <div>
+          <h1><em>Materias</em></h1>
+          <p class="page-subtitle">Asignaturas del plan de estudios ICO</p>
+        </div>
+        <button class="btn-primary" onclick="openMateriaModal()">+ Nueva materia</button>
+      </div>
+
+      <div class="search-wrap">
+        <select class="filter-select" id="mat-filter-sem" onchange="loadMaterias()">
+          <option value="">Todos los semestres</option>
+        </select>
+      </div>
+
+      <div class="table-card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Materia</th>
+                <th>Clave</th>
+                <th>Créditos</th>
+                <th>Semestre</th>
+                <th>Área</th>
+                <th>Carácter</th>
+                <th>Refs</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="materias-tbody">
+              <tr class="loading-row"><td colspan="8"><span class="spinner"></span> Cargando…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SEMESTRES ── -->
+    <div class="section-panel" id="panel-semestres">
+      <div class="page-header">
+        <div>
+          <h1><em>Semestres</em></h1>
+          <p class="page-subtitle">Organización curricular por semestre</p>
+        </div>
+      </div>
+      <div class="sem-grid" id="sem-grid">
+        <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-soft);">
+          <span class="spinner"></span> Cargando semestres…
+        </div>
+      </div>
+    </div>
+
+    <!-- ── BÚSQUEDA AVANZADA ── -->
+    <div class="section-panel" id="panel-buscar">
+      <div class="page-header">
+        <div>
+          <h1>Búsqueda <em>Avanzada</em></h1>
+          <p class="page-subtitle">Filtra referencias por múltiples criterios</p>
+        </div>
+      </div>
+
+      <div class="table-card" style="padding:1.5rem;margin-bottom:1.5rem;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
+          <div class="form-group">
+            <label class="form-label">Texto libre</label>
+            <input class="form-input" type="text" id="adv-q" placeholder="Título, autor, editorial…" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Materia</label>
+            <select class="form-select" id="adv-materia"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tipo</label>
+            <select class="form-select" id="adv-tipo">
+              <option value="">Todos</option>
+              <option value="basica">Básica</option>
+              <option value="complementaria">Complementaria</option>
+            </select>
+          </div>
+          <div class="form-group" style="justify-content:flex-end;">
+            <label class="form-label">&nbsp;</label>
+            <button class="btn-primary" onclick="runAdvSearch()">🔍 Buscar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-card" id="adv-results-card" style="display:none;">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Título</th><th>Autor(es)</th><th>Año</th><th>Tipo</th><th>Materia</th><th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="adv-tbody"></tbody>
+          </table>
+        </div>
+        <div class="table-footer"><span id="adv-count">— resultados</span></div>
+      </div>
+    </div>
+
+    <!-- ── GENERADOR DE CITAS ── -->
+    <div class="section-panel" id="panel-citas">
+      <div class="page-header">
+        <div>
+          <h1>Generador de <em>Citas</em></h1>
+          <p class="page-subtitle">Produce automáticamente citas en APA 7, IEEE, MLA y BibTeX</p>
+        </div>
+      </div>
+
+      <div class="table-card" style="padding:1.5rem;margin-bottom:1.5rem;">
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;">
+          <div class="form-group" style="flex:1;min-width:180px;">
+            <label class="form-label">Materia</label>
+            <select class="form-select" id="cita-materia-sel" onchange="loadCitasList()">
+              <option value="">— Selecciona una materia —</option>
+            </select>
+          </div>
+          <div class="form-group" style="flex:1;min-width:160px;">
+            <label class="form-label">O busca por bibliografía ID</label>
+            <input class="form-input" type="number" id="cita-bib-id" placeholder="ID de bibliografía…" />
+          </div>
+          <button class="btn-primary" onclick="loadCitasById()">Generar cita</button>
+        </div>
+      </div>
+
+      <div id="citas-results"></div>
+    </div>
+
+  </main><!-- /main -->
+</div><!-- /app-shell -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL: BIBLIOGRAFÍA FORM
+═══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="bib-modal-overlay" onclick="closeModal('bib-modal-overlay')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title" id="bib-modal-title">Nueva referencia bibliográfica</div>
+      <button class="modal-close" onclick="closeModal('bib-modal-overlay')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="bib-id" />
+      <div class="form-grid">
+        <div class="form-section-title">Datos principales</div>
+
+        <div class="form-group full">
+          <label class="form-label">Título <span class="req">*</span></label>
+          <input class="form-input" type="text" id="bib-titulo" placeholder="Título de la obra…" />
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Subtítulo</label>
+          <input class="form-input" type="text" id="bib-subtitulo" placeholder="Subtítulo opcional…" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Materia <span class="req">*</span></label>
+          <select class="form-select" id="bib-materia"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Año</label>
+          <input class="form-input" type="number" id="bib-anio" placeholder="2024" min="1800" max="2099" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo de bibliografía</label>
+          <select class="form-select" id="bib-tipo">
+            <option value="basica">Básica</option>
+            <option value="complementaria">Complementaria</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo de recurso</label>
+          <select class="form-select" id="bib-tipo-recurso">
+            <option value="libro">Libro</option>
+            <option value="articulo">Artículo</option>
+            <option value="capitulo">Capítulo</option>
+            <option value="tesis">Tesis</option>
+            <option value="web">Web</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="form-section-title">Editorial &amp; ubicación</div>
+
+        <div class="form-group">
+          <label class="form-label">Editorial</label>
+          <input class="form-input" type="text" id="bib-editorial" placeholder="p. ej. Pearson" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Edición</label>
+          <input class="form-input" type="text" id="bib-edicion" placeholder="p. ej. 3a ed." />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ciudad</label>
+          <input class="form-input" type="text" id="bib-ciudad" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">País</label>
+          <input class="form-input" type="text" id="bib-pais" />
+        </div>
+
+        <div class="form-section-title">Para artículos de revista</div>
+
+        <div class="form-group full">
+          <label class="form-label">Nombre de la revista</label>
+          <input class="form-input" type="text" id="bib-revista" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Volumen</label>
+          <input class="form-input" type="text" id="bib-volumen" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Número</label>
+          <input class="form-input" type="text" id="bib-numero" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Páginas</label>
+          <input class="form-input" type="text" id="bib-paginas" placeholder="pp. 10-25" />
+        </div>
+
+        <div class="form-section-title">Identificadores</div>
+
+        <div class="form-group">
+          <label class="form-label">ISBN</label>
+          <input class="form-input" type="text" id="bib-isbn" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">ISSN</label>
+          <input class="form-input" type="text" id="bib-issn" />
+        </div>
+        <div class="form-group full">
+          <label class="form-label">DOI</label>
+          <input class="form-input" type="text" id="bib-doi" placeholder="https://doi.org/…" />
+        </div>
+        <div class="form-group full">
+          <label class="form-label">URL</label>
+          <input class="form-input" type="url" id="bib-url" placeholder="https://…" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Fecha de consulta</label>
+          <input class="form-input" type="date" id="bib-fecha-consulta" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Temas recomendados</label>
+          <input class="form-input" type="text" id="bib-temas" placeholder="1,2,3,4,5" />
+        </div>
+
+        <div class="form-section-title">Autores</div>
+
+        <div class="form-group full">
+          <div style="font-size:.75rem;color:var(--text-soft);margin-bottom:.5rem;">
+            Apellidos · Inicial (p. ej. "A." o "A. V.") · Nombre completo (opcional)
+          </div>
+          <div class="autores-list" id="autores-list"></div>
+          <button class="btn-add-autor" onclick="addAutorRow()">+ Agregar autor</button>
+        </div>
+
+        <div class="form-group full">
+          <label class="form-label">Notas internas</label>
+          <textarea class="form-textarea" id="bib-notas" placeholder="Notas adicionales…"></textarea>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <button class="btn-secondary" onclick="closeModal('bib-modal-overlay')">Cancelar</button>
+        <button class="btn-primary" onclick="saveBib()">💾 Guardar referencia</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL: MATERIA FORM
+═══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="mat-modal-overlay" onclick="closeModal('mat-modal-overlay')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title" id="mat-modal-title">Nueva materia</div>
+      <button class="modal-close" onclick="closeModal('mat-modal-overlay')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="mat-id" />
+      <div class="form-grid">
+        <div class="form-group full">
+          <label class="form-label">Nombre <span class="req">*</span></label>
+          <input class="form-input" type="text" id="mat-nombre" placeholder="p. ej. Geometría Analítica" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Clave</label>
+          <input class="form-input" type="text" id="mat-clave" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Créditos</label>
+          <input class="form-input" type="number" id="mat-creditos" min="1" max="20" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Semestre <span class="req">*</span></label>
+          <select class="form-select" id="mat-semestre"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Área</label>
+          <input class="form-input" type="text" id="mat-area" placeholder="p. ej. Matemáticas" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Carácter</label>
+          <select class="form-select" id="mat-caracter">
+            <option value="">—</option>
+            <option value="Obligatorio">Obligatorio</option>
+            <option value="Optativo">Optativo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Modalidad</label>
+          <select class="form-select" id="mat-modalidad">
+            <option value="">—</option>
+            <option value="Curso">Curso</option>
+            <option value="Taller">Taller</option>
+            <option value="Seminario">Seminario</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo</label>
+          <select class="form-select" id="mat-tipo">
+            <option value="">—</option>
+            <option value="Teórico">Teórico</option>
+            <option value="Práctico">Práctico</option>
+            <option value="T/P">T/P</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Objetivo</label>
+          <textarea class="form-textarea" id="mat-objetivo"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Asignatura antecedente</label>
+          <input class="form-input" type="text" id="mat-ant" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Asignatura subsecuente</label>
+          <input class="form-input" type="text" id="mat-sub" />
+        </div>
+      </div>
+      <div class="form-footer">
+        <button class="btn-secondary" onclick="closeModal('mat-modal-overlay')">Cancelar</button>
+        <button class="btn-primary" onclick="saveMateria()">💾 Guardar materia</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL: CITAS
+═══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="cite-modal-overlay" onclick="closeModal('cite-modal-overlay')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">📝 Citas generadas</div>
+        <div id="cite-modal-subtitle" style="font-size:.8rem;color:var(--text-soft);margin-top:.2rem;"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal('cite-modal-overlay')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="cite-tabs">
+        <button class="cite-tab active" onclick="showCiteTab('apa',this)">APA 7</button>
+        <button class="cite-tab" onclick="showCiteTab('ieee',this)">IEEE</button>
+        <button class="cite-tab" onclick="showCiteTab('mla',this)">MLA</button>
+        <button class="cite-tab" onclick="showCiteTab('bibtex',this)">BibTeX</button>
+      </div>
+      <div id="cite-content">
+        <div class="cite-block cite-placeholder">Selecciona una bibliografía para ver sus citas.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TOAST CONTAINER
+═══════════════════════════════════════════════════════════ -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════════════ -->
+<script>
+// ─────────────────────────────────────────────────────────
+//  CONFIG — adjust base URL to match your server
+// ─────────────────────────────────────────────────────────
+const API = {
+  bibs:       'api/bibliografias.php',
+  autores:    'api/autores.php',
+  materias:   'api/materias.php',
+  semestres:  'api/semestres.php',
+  citas:      'api/citas.php',
+};
+
+// ─────────────────────────────────────────────────────────
+//  GLOBAL STATE
+// ─────────────────────────────────────────────────────────
+let allBibs       = [];
+let currentCitas  = null;
+let debounceTimer = null;
+let semestresData = [];
+let materiasData  = [];
+
+// ─────────────────────────────────────────────────────────
+//  NAVIGATION
+// ─────────────────────────────────────────────────────────
+function navigate(section) {
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(`panel-${section}`)?.classList.add('active');
+  document.getElementById(`nav-${section}`)?.classList.add('active');
+
+  // lazy-load data per section
+  if (section === 'bibliografias') loadBibs();
+  if (section === 'autores') {
+    // Si había un detalle de autor abierto, limpiarlo
+    const det = document.getElementById('autor-detalle');
+    if (det) det.remove();
+    document.getElementById('autor-search-wrap').style.display = '';
+    document.getElementById('authors-grid').style.display = '';
+    loadAutores();
+  }
+  if (section === 'materias')      loadMaterias();
+  if (section === 'semestres')     loadSemestres();
+  if (section === 'buscar')        loadAdvSearchMaterias();
+  if (section === 'citas')         loadCitasMaterias();
+
+  // close mobile sidebar
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+function filterGroup(grp) {
+  // Rangos de semestre por grupo
+  const ranges = { '2808': [1,3], '2859': [4,5], '2809': [6,9] };
+  const [min, max] = ranges[grp];
+  navigate('semestres');
+  // Highlight selected group buttons
+  document.querySelectorAll('.sidebar-section .nav-item').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+
+  // Filter the semestres grid to only show the relevant ones
+  const grid = document.getElementById('sem-grid');
+  if (!semestresData.length) {
+    loadSemestres().then(() => renderSemestresFiltered(min, max));
+  } else {
+    renderSemestresFiltered(min, max);
+  }
+}
+
+function renderSemestresFiltered(min, max) {
+  const grid = document.getElementById('sem-grid');
+  const filtered = semestresData.filter(s => s.numero !== null && s.numero >= min && s.numero <= max);
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📅</div><p>No hay semestres en este rango.</p></div>`;
+    return;
+  }
+  grid.innerHTML = filtered.map(s => `
+    <div class="sem-card" onclick="filterBySemestre(${s.id}, '${escHtml(s.nombre)}')">
+      <div class="sem-num">${s.numero}</div>
+      <div class="sem-name">${escHtml(s.nombre)}</div>
+      <div class="sem-count">Ver materias →</div>
+    </div>`).join('');
+}
+
+function filterOptativas() {
+  navigate('semestres');
+  document.querySelectorAll('.sidebar-section .nav-item').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+
+  const grid = document.getElementById('sem-grid');
+  if (!semestresData.length) {
+    loadSemestres().then(() => renderOptativas());
+  } else {
+    renderOptativas();
+  }
+}
+
+function renderOptativas() {
+  const grid = document.getElementById('sem-grid');
+  // Optativas tienen numero = null en la BD
+  const optativa = semestresData.find(s => s.numero === null || s.numero === '');
+  if (!optativa) {
+    grid.innerHTML = `<div class="empty-state"><div class="empty-state-icon">✦</div><p>No se encontró la categoría Optativa en la BD.</p></div>`;
+    return;
+  }
+  // Mostrar card y redirigir a materias filtradas por ese semestre_id
+  grid.innerHTML = `
+    <div class="sem-card" onclick="filterBySemestre(${optativa.id}, '${escHtml(optativa.nombre)}')">
+      <div class="sem-num">✦</div>
+      <div class="sem-name">${escHtml(optativa.nombre)}</div>
+      <div class="sem-count">Ver materias optativas →</div>
+    </div>`;
+}
+
+// ─────────────────────────────────────────────────────────
+//  MODALS
+// ─────────────────────────────────────────────────────────
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// ─────────────────────────────────────────────────────────
+//  TOAST
+// ─────────────────────────────────────────────────────────
+function showToast(msg, type = 'info') {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  const icons = { success: '✅', error: '❌', info: '💬' };
+  t.className = `toast ${type}`;
+  t.innerHTML = `<span>${icons[type] || '💬'}</span><span>${msg}</span>`;
+  c.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+// ─────────────────────────────────────────────────────────
+//  FETCH HELPER
+// ─────────────────────────────────────────────────────────
+async function apiFetch(url, opts = {}) {
+  const r = await fetch(url, {
+    headers: { 'Content-Type': 'application/json' },
+    ...opts,
+  });
+  if (!r.ok) {
+    const err = await r.json().catch(() => ({}));
+    throw new Error(err.error || `HTTP ${r.status}`);
+  }
+  return r.json();
+}
+
+// ─────────────────────────────────────────────────────────
+//  BIBLIOGRAFÍAS
+// ─────────────────────────────────────────────────────────
+async function loadBibs() {
+  const q       = document.getElementById('bib-search')?.value || '';
+  const tipo    = document.getElementById('bib-filter-tipo')?.value || '';
+  const materia = document.getElementById('bib-filter-materia')?.value || '';
+
+  const params = new URLSearchParams();
+  if (q)       params.set('q', q);
+  if (tipo)    params.set('tipo', tipo);
+  if (materia) params.set('materia_id', materia);
+
+  const tbody = document.getElementById('bibs-tbody');
+  tbody.innerHTML = `<tr class="loading-row"><td colspan="7"><span class="spinner"></span> Cargando…</td></tr>`;
+
+  try {
+    const data = await apiFetch(`${API.bibs}?${params}`);
+    allBibs = data;
+    renderBibs(data);
+    document.getElementById('bibs-count').textContent = `${data.length} registros`;
+    document.getElementById('stat-bibs').textContent = data.length;
+    document.getElementById('count-bibs').textContent = data.length;
+  } catch (e) {
+    tbody.innerHTML = `<tr class="loading-row"><td colspan="7">⚠️ ${e.message}</td></tr>`;
+  }
+}
+
+function renderBibs(data) {
+  const tbody = document.getElementById('bibs-tbody');
+  if (!data.length) {
+    tbody.innerHTML = `<tr class="loading-row"><td colspan="7">Sin resultados.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = data.map(b => {
+    const autores = (b.autores || []).map(a => `${a.apellidos}, ${a.inicial}`).join(' · ') || '—';
+    return `
+    <tr>
+      <td class="td-titulo">
+        ${escHtml(b.titulo)}
+        ${b.subtitulo ? `<small>${escHtml(b.subtitulo)}</small>` : ''}
+      </td>
+      <td style="font-size:.83rem;color:var(--text-mid)">${escHtml(autores)}</td>
+      <td>${b.anio || '—'}</td>
+      <td><span class="pill pill-${b.tipo}">${b.tipo}</span></td>
+      <td><span class="pill pill-${b.tipo_recurso}">${b.tipo_recurso}</span></td>
+      <td style="font-size:.82rem;color:var(--text-soft)">${escHtml(b.materia_nombre||'—')}</td>
+      <td>
+        <div class="td-actions">
+          <button class="btn-icon cite" title="Ver citas" onclick="showCiteModal(${b.id})">📝</button>
+          <button class="btn-icon edit" title="Editar" onclick="editBib(${b.id})">✏️</button>
+          <button class="btn-icon del"  title="Borrar"  onclick="deleteBib(${b.id}, this)">🗑️</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function debounceSearch() {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(loadBibs, 350);
+}
+
+async function openBibModal(prefillData = null) {
+  document.getElementById('bib-id').value = '';
+  document.getElementById('bib-modal-title').textContent = 'Nueva referencia bibliográfica';
+
+  // reset form
+  ['bib-titulo','bib-subtitulo','bib-anio','bib-editorial','bib-edicion',
+   'bib-ciudad','bib-pais','bib-revista','bib-volumen','bib-numero',
+   'bib-paginas','bib-isbn','bib-issn','bib-doi','bib-url',
+   'bib-fecha-consulta','bib-temas','bib-notas'].forEach(id => {
+     const el = document.getElementById(id);
+     if (el) el.value = '';
+  });
+  document.getElementById('bib-tipo').value = 'basica';
+  document.getElementById('bib-tipo-recurso').value = 'libro';
+  document.getElementById('autores-list').innerHTML = '';
+  addAutorRow();
+
+  // fill materia select
+  await fillMateriaSelect('bib-materia');
+
+  if (prefillData) {
+    // prefill for edit
+    Object.entries(prefillData).forEach(([k, v]) => {
+      const el = document.getElementById(`bib-${k}`);
+      if (el && v !== null && v !== undefined) el.value = v;
+    });
+    if (prefillData.autores?.length) {
+      document.getElementById('autores-list').innerHTML = '';
+      prefillData.autores.forEach(a => addAutorRow(a));
+    }
+  }
+
+  openModal('bib-modal-overlay');
+}
+
+async function editBib(id) {
+  try {
+    const bib = await apiFetch(`${API.bibs}?id=${id}`);
+    document.getElementById('bib-id').value = id;
+    document.getElementById('bib-modal-title').textContent = 'Editar referencia';
+    await openBibModal({
+      titulo: bib.titulo, subtitulo: bib.subtitulo, materia_id: bib.materia_id,
+      anio: bib.anio, tipo: bib.tipo, 'tipo-recurso': bib.tipo_recurso,
+      editorial: bib.editorial, edicion: bib.edicion, ciudad: bib.ciudad,
+      pais: bib.pais, revista: bib.revista, volumen: bib.volumen,
+      numero: bib.numero_revista, paginas: bib.paginas,
+      isbn: bib.isbn, issn: bib.issn, doi: bib.doi, url: bib.url,
+      'fecha-consulta': bib.fecha_consulta, temas: bib.temas_recomendados,
+      notas: bib.notas, autores: bib.autores,
+    });
+    document.getElementById('bib-id').value = id;
+  } catch (e) {
+    showToast('Error al cargar: ' + e.message, 'error');
+  }
+}
+
+async function saveBib() {
+  const id = document.getElementById('bib-id').value;
+  const autores = collectAutores();
+
+  const body = {
+    titulo:          document.getElementById('bib-titulo').value.trim(),
+    subtitulo:       document.getElementById('bib-subtitulo').value.trim() || null,
+    materia_id:      document.getElementById('bib-materia').value,
+    anio:            document.getElementById('bib-anio').value || null,
+    tipo:            document.getElementById('bib-tipo').value,
+    tipo_recurso:    document.getElementById('bib-tipo-recurso').value,
+    editorial:       document.getElementById('bib-editorial').value.trim() || null,
+    edicion:         document.getElementById('bib-edicion').value.trim() || null,
+    ciudad:          document.getElementById('bib-ciudad').value.trim() || null,
+    pais:            document.getElementById('bib-pais').value.trim() || null,
+    revista:         document.getElementById('bib-revista').value.trim() || null,
+    volumen:         document.getElementById('bib-volumen').value.trim() || null,
+    numero_revista:  document.getElementById('bib-numero').value.trim() || null,
+    paginas:         document.getElementById('bib-paginas').value.trim() || null,
+    isbn:            document.getElementById('bib-isbn').value.trim() || null,
+    issn:            document.getElementById('bib-issn').value.trim() || null,
+    doi:             document.getElementById('bib-doi').value.trim() || null,
+    url:             document.getElementById('bib-url').value.trim() || null,
+    fecha_consulta:  document.getElementById('bib-fecha-consulta').value || null,
+    temas_recomendados: document.getElementById('bib-temas').value.trim() || null,
+    notas:           document.getElementById('bib-notas').value.trim() || null,
+    autores,
+  };
+
+  if (!body.titulo) { showToast('El título es obligatorio', 'error'); return; }
+  if (!body.materia_id) { showToast('Selecciona una materia', 'error'); return; }
+
+  try {
+    if (id) {
+      await apiFetch(`${API.bibs}?id=${id}`, { method: 'PUT', body: JSON.stringify(body) });
+      showToast('Referencia actualizada ✨', 'success');
+    } else {
+      await apiFetch(API.bibs, { method: 'POST', body: JSON.stringify(body) });
+      showToast('Referencia creada 🌸', 'success');
+    }
+    closeModal('bib-modal-overlay');
+    loadBibs();
+  } catch (e) {
+    showToast('Error: ' + e.message, 'error');
+  }
+}
+
+async function deleteBib(id, btn) {
+  if (!confirm('¿Borrar esta referencia? Esta acción no se puede deshacer.')) return;
+  try {
+    await apiFetch(`${API.bibs}?id=${id}`, { method: 'DELETE' });
+    btn.closest('tr').remove();
+    showToast('Referencia eliminada', 'success');
+    loadBibs();
+  } catch (e) {
+    showToast('Error: ' + e.message, 'error');
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+//  AUTORES ROWS
+// ─────────────────────────────────────────────────────────
+function addAutorRow(data = {}) {
+  const list = document.getElementById('autores-list');
+  const row  = document.createElement('div');
+  row.className = 'autor-row';
+  row.innerHTML = `
+    <input type="text" placeholder="Apellidos *" value="${escHtml(data.apellidos||'')}" class="ap" />
+    <input type="text" placeholder="Inicial *"   value="${escHtml(data.inicial||'')}"   class="ini" />
+    <input type="text" placeholder="Nombre"       value="${escHtml(data.nombre||'')}"   class="nom" />
+    <button class="autor-del" onclick="this.closest('.autor-row').remove()" title="Quitar">✕</button>
+  `;
+  list.appendChild(row);
+}
+
+function collectAutores() {
+  return [...document.querySelectorAll('#autores-list .autor-row')].map(row => ({
+    apellidos: row.querySelector('.ap').value.trim(),
+    inicial:   row.querySelector('.ini').value.trim(),
+    nombre:    row.querySelector('.nom').value.trim() || null,
+  })).filter(a => a.apellidos && a.inicial);
+}
+
+// ─────────────────────────────────────────────────────────
+//  AUTORES SECTION
+// ─────────────────────────────────────────────────────────
+async function loadAutores(q = '') {
+  const grid = document.getElementById('authors-grid');
+  grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-soft);"><span class="spinner"></span> Cargando…</div>`;
+  try {
+    const params = q ? `?q=${encodeURIComponent(q)}` : '';
+    const data = await apiFetch(API.autores + params);
+    document.getElementById('count-autores').textContent = data.length;
+    document.getElementById('stat-autores').textContent  = data.length;
+    if (!data.length) {
+      grid.innerHTML = `<div style="grid-column:1/-1;" class="empty-state"><div class="empty-state-icon">✍️</div><p>No se encontraron autores.</p></div>`;
+      return;
+    }
+    grid.innerHTML = data.map(a => `
+      <div class="author-card" onclick="showAutorObras(${a.id}, '${escHtml(a.apellidos)}')">
+        <div class="author-initial-circle">${(a.apellidos||'?')[0].toUpperCase()}</div>
+        <div class="author-name">${escHtml(a.apellidos)}</div>
+        <div class="author-initial">${escHtml(a.inicial)}${a.nombre ? ' · ' + escHtml(a.nombre) : ''}</div>
+        <div class="author-count">${a.num_obras} obra(s)</div>
+      </div>`).join('');
+  } catch (e) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--rose-500);">⚠️ ${e.message}</div>`;
+  }
+}
+
+function debounceAutorSearch() {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    const q = document.getElementById('autor-search').value.trim();
+    loadAutores(q);
+  }, 350);
+}
+
+async function showAutorObras(id, apellidos) {
+  try {
+    const data = await apiFetch(`${API.autores}?id=${id}`);
+    const obras = data.obras || [];
+
+    // Ocultar la grilla de autores y mostrar el detalle en su lugar
+    const panel = document.getElementById('panel-autores');
+    // Guardar la vista de grilla para restaurarla al volver
+    const gridView = document.getElementById('authors-grid-wrap');
+
+    let html = `
+    <div id="autor-detalle">
+      <div class="page-header">
+        <div>
+          <h1 style="font-family:var(--serif);font-size:2rem;color:var(--navy-800);">
+            Obras de <em style="color:var(--rose-500)">${escHtml(apellidos)}</em>
+          </h1>
+          <p style="color:var(--text-soft);font-size:.85rem;">${obras.length} obra(s) encontrada(s)</p>
+        </div>
+        <button class="btn-secondary" onclick="volverAAutores()">← Volver a autores</button>
+      </div>
+      <div class="table-card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Título</th><th>Año</th><th>Editorial</th><th>Materia</th><th>Cita</th></tr></thead>
+            <tbody>`;
+    obras.forEach(o => {
+      html += `<tr>
+        <td class="td-titulo">${escHtml(o.titulo)}</td>
+        <td>${o.anio||'—'}</td>
+        <td style="font-size:.82rem">${escHtml(o.editorial||'—')}</td>
+        <td style="font-size:.82rem">${escHtml(o.materia_nombre||'—')}</td>
+        <td><button class="btn-icon cite" onclick="showCiteModal(${o.id})">📝</button></td>
+      </tr>`;
+    });
+    html += `</tbody></table></div></div></div>`;
+
+    // Ocultar búsqueda y grilla, inyectar detalle
+    document.getElementById('autor-search').closest('.search-wrap').style.display = 'none';
+    document.getElementById('authors-grid').style.display = 'none';
+
+    // Quitar detalle anterior si existía
+    const prev = document.getElementById('autor-detalle');
+    if (prev) prev.remove();
+
+    panel.insertAdjacentHTML('beforeend', html);
+  } catch (e) {
+    showToast('Error: ' + e.message, 'error');
+  }
+}
+
+function volverAAutores() {
+  // Restaurar búsqueda y grilla
+  document.getElementById('autor-search-wrap').style.display = '';
+  document.getElementById('authors-grid').style.display = '';
+  // Quitar detalle
+  const det = document.getElementById('autor-detalle');
+  if (det) det.remove();
+}
+
+// ─────────────────────────────────────────────────────────
+//  MATERIAS
+// ─────────────────────────────────────────────────────────
+async function loadMaterias() {
+  const semId = document.getElementById('mat-filter-sem')?.value || '';
+  const params = semId ? `?semestre_id=${semId}` : '';
+  const tbody = document.getElementById('materias-tbody');
+  tbody.innerHTML = `<tr class="loading-row"><td colspan="8"><span class="spinner"></span> Cargando…</td></tr>`;
+  try {
+    const data = await apiFetch(API.materias + params);
+    materiasData = data;
+    document.getElementById('stat-materias').textContent = data.length;
+    document.getElementById('count-materias').textContent = data.length;
+    tbody.innerHTML = data.map(m => `
+      <tr>
+        <td class="td-titulo">${escHtml(m.nombre)}</td>
+        <td style="font-size:.82rem">${escHtml(m.clave||'—')}</td>
+        <td style="text-align:center">${m.creditos||'—'}</td>
+        <td style="font-size:.82rem">${escHtml(m.semestre_nombre||'—')}</td>
+        <td style="font-size:.82rem">${escHtml(m.area||'—')}</td>
+        <td><span class="pill ${m.caracter==='Obligatorio'?'pill-basica':'pill-complementaria'}">${m.caracter||'—'}</span></td>
+        <td style="text-align:center">${m.num_bibliografias||0}</td>
+        <td>
+          <div class="td-actions">
+            <button class="btn-icon edit" onclick="editMateria(${m.id})">✏️</button>
+            <button class="btn-icon del"  onclick="deleteMateria(${m.id}, this)">🗑️</button>
+          </div>
+        </td>
+      </tr>`).join('');
+  } catch (e) {
+    tbody.innerHTML = `<tr class="loading-row"><td colspan="8">⚠️ ${e.message}</td></tr>`;
+  }
+}
+
+async function openMateriaModal(prefill = null) {
+  document.getElementById('mat-id').value = '';
+  document.getElementById('mat-modal-title').textContent = 'Nueva materia';
+  ['mat-nombre','mat-clave','mat-creditos','mat-area','mat-objetivo','mat-ant','mat-sub'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  await fillSemestreSelect('mat-semestre');
+  if (prefill) {
+    Object.entries(prefill).forEach(([k,v]) => {
+      const el = document.getElementById(`mat-${k}`);
+      if (el && v !== null) el.value = v;
+    });
+  }
+  openModal('mat-modal-overlay');
+}
+
+async function editMateria(id) {
+  const m = materiasData.find(x => x.id == id) || await apiFetch(`${API.materias}?id=${id}`);
+  await openMateriaModal({
+    id, nombre: m.nombre, clave: m.clave, creditos: m.creditos,
+    semestre: m.semestre_id, area: m.area, caracter: m.caracter,
+    modalidad: m.modalidad, tipo: m.tipo,
+    objetivo: m.objetivo, ant: m.asignatura_antecedente, sub: m.asignatura_subsecuente,
+  });
+  document.getElementById('mat-id').value = id;
+  document.getElementById('mat-modal-title').textContent = 'Editar materia';
+}
+
+async function saveMateria() {
+  const id = document.getElementById('mat-id').value;
+  const body = {
+    nombre:     document.getElementById('mat-nombre').value.trim(),
+    clave:      document.getElementById('mat-clave').value.trim() || null,
+    creditos:   document.getElementById('mat-creditos').value || null,
+    semestre_id: document.getElementById('mat-semestre').value,
+    area:       document.getElementById('mat-area').value.trim() || null,
+    caracter:   document.getElementById('mat-caracter').value || null,
+    modalidad:  document.getElementById('mat-modalidad').value || null,
+    tipo:       document.getElementById('mat-tipo').value || null,
+    objetivo:   document.getElementById('mat-objetivo').value.trim() || null,
+    asignatura_antecedente: document.getElementById('mat-ant').value.trim() || null,
+    asignatura_subsecuente: document.getElementById('mat-sub').value.trim() || null,
+  };
+  if (!body.nombre) { showToast('El nombre es obligatorio', 'error'); return; }
+  try {
+    if (id) {
+      await apiFetch(`${API.materias}?id=${id}`, { method: 'PUT', body: JSON.stringify(body) });
+      showToast('Materia actualizada ✨', 'success');
+    } else {
+      await apiFetch(API.materias, { method: 'POST', body: JSON.stringify(body) });
+      showToast('Materia creada 🌸', 'success');
+    }
+    closeModal('mat-modal-overlay');
+    loadMaterias();
+  } catch (e) {
+    showToast('Error: ' + e.message, 'error');
+  }
+}
+
+async function deleteMateria(id, btn) {
+  if (!confirm('¿Borrar esta materia y todas sus bibliografías? Esta acción no se puede deshacer.')) return;
+  try {
+    await apiFetch(`${API.materias}?id=${id}`, { method: 'DELETE' });
+    btn.closest('tr').remove();
+    showToast('Materia eliminada', 'success');
+  } catch (e) {
+    showToast('Error: ' + e.message, 'error');
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+//  SEMESTRES
+// ─────────────────────────────────────────────────────────
+async function loadSemestres() {
+  const grid = document.getElementById('sem-grid');
+  try {
+    const data = await apiFetch(API.semestres);
+    semestresData = data;
+    grid.innerHTML = data.map(s => `
+      <div class="sem-card" onclick="filterBySemestre(${s.id}, '${escHtml(s.nombre)}')">
+        <div class="sem-num">${s.numero ?? '✦'}</div>
+        <div class="sem-name">${escHtml(s.nombre)}</div>
+        <div class="sem-count">Ver materias →</div>
+      </div>`).join('');
+  } catch(e) {
+    grid.innerHTML = `<div style="color:var(--rose-500);padding:2rem;">⚠️ ${e.message}</div>`;
+  }
+}
+
+function filterBySemestre(id, nombre) {
+  navigate('materias');
+  const sel = document.getElementById('mat-filter-sem');
+  if (sel) { sel.value = id; }
+  loadMaterias();
+}
+
+// ─────────────────────────────────────────────────────────
+//  CITAS
+// ─────────────────────────────────────────────────────────
+let currentCitasData = null;
+let currentCitaTab   = 'apa';
+
+async function showCiteModal(bibId) {
+  openModal('cite-modal-overlay');
+  document.getElementById('cite-content').innerHTML = `<div class="cite-block"><span class="spinner"></span> Generando citas…</div>`;
+  try {
+    const data = await apiFetch(`${API.citas}?id=${bibId}`);
+    currentCitasData = data.citas;
+    document.getElementById('cite-modal-subtitle').textContent = data.titulo || '';
+    showCiteTab(currentCitaTab, document.querySelector('.cite-tab.active'));
+  } catch (e) {
+    document.getElementById('cite-content').innerHTML = `<div class="cite-block" style="color:var(--rose-600);">⚠️ ${e.message}</div>`;
+  }
+}
+
+function showCiteTab(tab, btn) {
+  currentCitaTab = tab;
+  document.querySelectorAll('.cite-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  else document.querySelectorAll('.cite-tab').forEach(t => {
+    if (t.textContent.toLowerCase().includes(tab)) t.classList.add('active');
+  });
+
+  if (!currentCitasData) {
+    document.getElementById('cite-content').innerHTML = `<div class="cite-block cite-placeholder">Sin datos.</div>`;
+    return;
+  }
+
+  const text = currentCitasData[tab] || '(no disponible)';
+  const isCode = tab === 'bibtex';
+  document.getElementById('cite-content').innerHTML = `
+    <div class="cite-block" style="${isCode ? 'font-family:monospace;white-space:pre-wrap;font-size:.83rem;' : ''}">
+      <button class="cite-copy" onclick="copyCite(this, \`${escHtml(text).replace(/`/g,'\\`')}\`)">Copiar</button>
+      ${escHtml(text)}
+    </div>`;
+}
+
+function copyCite(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '¡Copiado!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+async function loadCitasMaterias() {
+  await fillMateriaSelect('cita-materia-sel', true);
+}
+
+async function loadCitasList() {
+  const matId = document.getElementById('cita-materia-sel').value;
+  if (!matId) return;
+  const container = document.getElementById('citas-results');
+  container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--text-soft);"><span class="spinner"></span> Generando…</div>`;
+  try {
+    const data = await apiFetch(`${API.citas}?materia_id=${matId}`);
+    if (!data.length) {
+      container.innerHTML = `<p style="color:var(--text-soft);text-align:center;padding:2rem;">No hay bibliografías para esta materia.</p>`;
+      return;
+    }
+    container.innerHTML = data.map(item => `
+      <div class="table-card" style="margin-bottom:1.25rem;padding:1.5rem;">
+        <div style="font-weight:600;color:var(--navy-800);margin-bottom:.75rem;font-family:var(--serif);">${escHtml(item.titulo)}</div>
+        <div class="cite-tabs" style="border-bottom:1px solid var(--warm-200);margin-bottom:1rem;">
+          ${['apa','ieee','mla','bibtex'].map(f => `
+            <button class="cite-tab ${f==='apa'?'active':''}" onclick="toggleInlineCite(this,'${f}','cite-${item.id}')">${f.toUpperCase()}</button>
+          `).join('')}
+        </div>
+        ${['apa','ieee','mla','bibtex'].map(f => `
+          <div id="cite-${item.id}-${f}" class="cite-block" style="${f!=='apa'?'display:none;':''}${f==='bibtex'?'font-family:monospace;white-space:pre-wrap;font-size:.82rem;':''}">
+            <button class="cite-copy" onclick="copyCite(this, \`${escHtml((item.citas||{})[f]||'').replace(/`/g,'\\`')}\`)">Copiar</button>
+            ${escHtml((item.citas||{})[f] || '(no disponible)')}
+          </div>
+        `).join('')}
+      </div>`).join('');
+  } catch (e) {
+    container.innerHTML = `<p style="color:var(--rose-600);">⚠️ ${e.message}</p>`;
+  }
+}
+
+function toggleInlineCite(btn, fmt, prefix) {
+  const parent = btn.closest('.table-card');
+  parent.querySelectorAll('.cite-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['apa','ieee','mla','bibtex'].forEach(f => {
+    const el = document.getElementById(`${prefix}-${f}`);
+    if (el) el.style.display = f === fmt ? '' : 'none';
+  });
+}
+
+async function loadCitasById() {
+  const id = document.getElementById('cita-bib-id').value;
+  if (!id) { showToast('Ingresa un ID de bibliografía', 'error'); return; }
+  await showCiteModal(id);
+  // show in results too
+  const container = document.getElementById('citas-results');
+  container.innerHTML = `<div style="text-align:center;padding:2rem;"><span class="spinner"></span> Generando…</div>`;
+  try {
+    const data = await apiFetch(`${API.citas}?id=${id}`);
+    container.innerHTML = `
+      <div class="table-card" style="padding:1.5rem;">
+        <div style="font-weight:600;color:var(--navy-800);margin-bottom:1rem;font-family:var(--serif);">${escHtml(data.titulo||'')}</div>
+        ${['apa','ieee','mla','bibtex'].map((f,i) => `
+          <p style="font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rose-500);margin:${i?'1.25rem 0 ':'.5rem 0 '}.25rem;">${f.toUpperCase()}</p>
+          <div class="cite-block" style="${f==='bibtex'?'font-family:monospace;white-space:pre-wrap;font-size:.82rem;':''}">
+            <button class="cite-copy" onclick="copyCite(this,\`${escHtml((data.citas||{})[f]||'').replace(/`/g,'\\`')}\`)">Copiar</button>
+            ${escHtml((data.citas||{})[f]||'(no disponible)')}
+          </div>`).join('')}
+      </div>`;
+  } catch (e) {
+    container.innerHTML = `<p style="color:var(--rose-600);">⚠️ ${e.message}</p>`;
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+//  BÚSQUEDA AVANZADA
+// ─────────────────────────────────────────────────────────
+async function loadAdvSearchMaterias() {
+  await fillMateriaSelect('adv-materia', true);
+}
+
+async function runAdvSearch() {
+  const q       = document.getElementById('adv-q').value.trim();
+  const materia = document.getElementById('adv-materia').value;
+  const tipo    = document.getElementById('adv-tipo').value;
+
+  const params = new URLSearchParams();
+  if (q)       params.set('q', q);
+  if (materia) params.set('materia_id', materia);
+  if (tipo)    params.set('tipo', tipo);
+
+  const card  = document.getElementById('adv-results-card');
+  const tbody = document.getElementById('adv-tbody');
+  card.style.display = '';
+  tbody.innerHTML = `<tr class="loading-row"><td colspan="6"><span class="spinner"></span> Buscando…</td></tr>`;
+
+  try {
+    const data = await apiFetch(`${API.bibs}?${params}`);
+    document.getElementById('adv-count').textContent = `${data.length} resultados`;
+    if (!data.length) {
+      tbody.innerHTML = `<tr class="loading-row"><td colspan="6">Sin resultados.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = data.map(b => {
+      const autores = (b.autores||[]).map(a => `${a.apellidos}, ${a.inicial}`).join(' · ') || '—';
+      return `<tr>
+        <td class="td-titulo">${escHtml(b.titulo)}</td>
+        <td style="font-size:.83rem">${escHtml(autores)}</td>
+        <td>${b.anio||'—'}</td>
+        <td><span class="pill pill-${b.tipo}">${b.tipo}</span></td>
+        <td style="font-size:.82rem">${escHtml(b.materia_nombre||'—')}</td>
+        <td>
+          <div class="td-actions">
+            <button class="btn-icon cite" onclick="showCiteModal(${b.id})">📝</button>
+            <button class="btn-icon edit" onclick="navigate('bibliografias');editBib(${b.id})">✏️</button>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+  } catch (e) {
+    tbody.innerHTML = `<tr class="loading-row"><td colspan="6">⚠️ ${e.message}</td></tr>`;
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+//  HELPERS: fill selects
+// ─────────────────────────────────────────────────────────
+async function fillMateriaSelect(selectId, includeBlank = false) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  try {
+    if (!materiasData.length) materiasData = await apiFetch(API.materias);
+    sel.innerHTML = (includeBlank ? '<option value="">— Todas las materias —</option>' : '')
+      + materiasData.map(m => `<option value="${m.id}">${escHtml(m.nombre)} (${escHtml(m.semestre_nombre||'')})</option>`).join('');
+    // also populate sidebar filter in bibs
+    const sibSel = document.getElementById('bib-filter-materia');
+    if (sibSel && sibSel.options.length <= 1) {
+      sibSel.innerHTML = '<option value="">Todas las materias</option>'
+        + materiasData.map(m => `<option value="${m.id}">${escHtml(m.nombre)}</option>`).join('');
+    }
+    // mat filter
+    const matSel = document.getElementById('mat-filter-sem');
+    if (matSel && matSel.options.length <= 1 && semestresData.length) {
+      matSel.innerHTML = '<option value="">Todos los semestres</option>'
+        + semestresData.map(s => `<option value="${s.id}">${escHtml(s.nombre)}</option>`).join('');
+    }
+  } catch {}
+}
+
+async function fillSemestreSelect(selectId) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  try {
+    if (!semestresData.length) semestresData = await apiFetch(API.semestres);
+    sel.innerHTML = semestresData.map(s => `<option value="${s.id}">${escHtml(s.nombre)}</option>`).join('');
+  } catch {}
+}
+
+// ─────────────────────────────────────────────────────────
+//  UTILITIES
+// ─────────────────────────────────────────────────────────
+function escHtml(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ─────────────────────────────────────────────────────────
+//  BOOT
+// ─────────────────────────────────────────────────────────
+async function boot() {
+  // Load semestres and materias silently on start for selects
+  try {
+    semestresData = await apiFetch(API.semestres);
+    materiasData  = await apiFetch(API.materias);
+
+    // Fill sidebar sem filter
+    const matSel = document.getElementById('mat-filter-sem');
+    if (matSel) {
+      matSel.innerHTML = '<option value="">Todos los semestres</option>'
+        + semestresData.map(s => `<option value="${s.id}">${escHtml(s.nombre)}</option>`).join('');
+    }
+
+    // Fill materia filters
+    const bibMatSel = document.getElementById('bib-filter-materia');
+    if (bibMatSel) {
+      bibMatSel.innerHTML = '<option value="">Todas las materias</option>'
+        + materiasData.map(m => `<option value="${m.id}">${escHtml(m.nombre)}</option>`).join('');
+    }
+
+    // Update stats
+    document.getElementById('stat-materias').textContent = materiasData.length;
+    document.getElementById('count-materias').textContent = materiasData.length;
+
+    // Load bibs for stat count
+    const bibs = await apiFetch(API.bibs);
+    document.getElementById('stat-bibs').textContent = bibs.length;
+    document.getElementById('count-bibs').textContent = bibs.length;
+
+    const autores = await apiFetch(API.autores);
+    document.getElementById('stat-autores').textContent = autores.length;
+    document.getElementById('count-autores').textContent = autores.length;
+
+  } catch (e) {
+    // backend not connected; graceful degradation
+    console.warn('Backend no disponible:', e.message);
+  }
+}
+
+// keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+  }
+});
+
+boot();
+</script>
+</body>
+</html>
