@@ -57,11 +57,11 @@ try {
                    COUNT(ba.bibliografia_id) AS num_obras
             FROM   autores a
             LEFT JOIN bibliografia_autores ba ON ba.autor_id = a.id
-            WHERE  a.apellidos LIKE :q OR a.nombre LIKE :q
+            WHERE  a.apellidos LIKE :q1 OR a.nombre LIKE :q2
             GROUP BY a.id
             ORDER BY a.apellidos
         ");
-        $stmt->execute([':q' => "%{$q}%"]);
+        $stmt->execute([':q1' => "%{$q}%", ':q2' => "%{$q}%"]);
     } else {
         $stmt = $pdo->query("
             SELECT a.id, a.nombre, a.apellidos, a.inicial,

@@ -40,8 +40,10 @@ try {
             $where  = [];
             $params = [];
             if ($q !== '') {
-                $where[] = '(b.titulo LIKE :q OR a.apellidos LIKE :q OR b.editorial LIKE :q)';
-                $params[':q'] = "%{$q}%";
+                $where[] = '(b.titulo LIKE :q1 OR a.apellidos LIKE :q2 OR b.editorial LIKE :q3)';
+                $params[':q1'] = "%{$q}%";
+                $params[':q2'] = "%{$q}%";
+                $params[':q3'] = "%{$q}%";
             }
             if ($materia_id) {
                 $where[] = 'b.materia_id = :mid';
